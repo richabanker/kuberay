@@ -46,7 +46,7 @@ func NewRayJobSubmissionServiceServer(clusterServer *ClusterServer, options *Ray
 
 // Submit Ray job
 func (s *RayJobSubmissionServiceServer) SubmitRayJob(ctx context.Context, req *api.SubmitRayJobRequest) (*api.SubmitRayJobReply, error) {
-	s.log.Info("RayJobSubmissionService submit job")
+	s.log.Info("RayJobSubmissionService submit job", "submission_id", req.Jobsubmission.SubmissionId, "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {
@@ -100,7 +100,7 @@ func (s *RayJobSubmissionServiceServer) SubmitRayJob(ctx context.Context, req *a
 
 // Get job details
 func (s *RayJobSubmissionServiceServer) GetJobDetails(ctx context.Context, req *api.GetJobDetailsRequest) (*api.JobSubmissionInfo, error) {
-	s.log.Info("RayJobSubmissionService get service")
+	s.log.Info("RayJobSubmissionService get service", "submission_id", req.Submissionid, "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {
@@ -122,7 +122,7 @@ func (s *RayJobSubmissionServiceServer) GetJobDetails(ctx context.Context, req *
 
 // Get Job log
 func (s *RayJobSubmissionServiceServer) GetJobLog(ctx context.Context, req *api.GetJobLogRequest) (*api.GetJobLogReply, error) {
-	s.log.Info("RayJobSubmissionService get job log")
+	s.log.Info("RayJobSubmissionService get job log", "submission_id", req.Submissionid, "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {
@@ -144,7 +144,7 @@ func (s *RayJobSubmissionServiceServer) GetJobLog(ctx context.Context, req *api.
 
 // List jobs
 func (s *RayJobSubmissionServiceServer) ListJobDetails(ctx context.Context, req *api.ListJobDetailsRequest) (*api.ListJobSubmissionInfo, error) {
-	s.log.Info("RayJobSubmissionService get jobs list")
+	s.log.Info("RayJobSubmissionService get jobs list", "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {
@@ -167,7 +167,7 @@ func (s *RayJobSubmissionServiceServer) ListJobDetails(ctx context.Context, req 
 
 // Stop job
 func (s *RayJobSubmissionServiceServer) StopRayJob(ctx context.Context, req *api.StopRayJobSubmissionRequest) (*emptypb.Empty, error) {
-	s.log.Info("RayJobSubmissionService stop job")
+	s.log.Info("RayJobSubmissionService stop job", "submission_id", req.Submissionid, "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {
@@ -186,7 +186,7 @@ func (s *RayJobSubmissionServiceServer) StopRayJob(ctx context.Context, req *api
 
 // Delete Job
 func (s *RayJobSubmissionServiceServer) DeleteRayJob(ctx context.Context, req *api.DeleteRayJobSubmissionRequest) (*emptypb.Empty, error) {
-	s.log.Info("RayJobSubmissionService delete job")
+	s.log.Info("RayJobSubmissionService delete job", "submission_id", req.Submissionid, "namespace", req.Namespace, "cluster", req.Clustername)
 	clusterRequest := api.GetClusterRequest{Name: req.Clustername, Namespace: req.Namespace}
 	url, err := s.getRayClusterURL(ctx, &clusterRequest)
 	if err != nil {

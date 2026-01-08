@@ -105,6 +105,12 @@ func (r *RayJobReconciler) Reconcile(ctx context.Context, request ctrl.Request) 
 		return ctrl.Result{RequeueAfter: RayJobDefaultRequeueDuration}, err
 	}
 
+	// Add job_id to logger context for correlation across all logs
+	if rayJobInstance.Status.JobId != "" {
+		logger = logger.WithValues("job_id", rayJobInstance.Status.JobId)
+		ctx = ctrl.LoggerInto(ctx, logger)
+	}
+
 	if manager := utils.ManagedByExternalController(rayJobInstance.Spec.ManagedBy); manager != nil {
 		logger.Info("Skipping RayJob managed by a custom controller", "managed-by", manager)
 		return ctrl.Result{}, nil
@@ -162,7 +168,7 @@ func (r *RayJobReconciler) Reconcile(ctx context.Context, request ctrl.Request) 
 		return ctrl.Result{}, nil
 	}
 
-	logger.Info("RayJob", "JobStatus", rayJobInstance.Status.JobStatus, "JobDeploymentStatus", rayJobInstance.Status.JobDeploymentStatus, "SubmissionMode", rayJobInstance.Spec.SubmissionMode)
+	logger.Info("RayJob", "JobStatus", rayJobInstance.Status.JobStatus, "JobDeploymentStatus", rayJobInstance.Status.JobDeploymentStatus, "SubmissionMode", rayJobInstance.Spec.SubmissionMode, "JobId", rayJobInstance.Status.JobId)
 	switch rayJobInstance.Status.JobDeploymentStatus {
 	case rayv1.JobDeploymentStatusNew:
 		if !controllerutil.ContainsFinalizer(rayJobInstance, utils.RayJobStopJobFinalizer) {
