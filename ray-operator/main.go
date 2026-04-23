@@ -37,6 +37,7 @@ import (
 	"github.com/ray-project/kuberay/ray-operator/controllers/ray/utils"
 	"github.com/ray-project/kuberay/ray-operator/pkg/features"
 	webhooks "github.com/ray-project/kuberay/ray-operator/pkg/webhooks/v1"
+	_ "github.com/ray-project/kuberay/ray-operator/pkg/observability"
 )
 
 var (
